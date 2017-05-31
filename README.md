@@ -15,7 +15,7 @@
 2. Ensured VIM was installed for editing:
 	* ``` sudo apt-get install vim ```
 3. Updated All Packages on System
-	* ``` sudo apt-get update && sudo apt-get upgrade
+	* ``` sudo apt-get update && sudo apt-get upgrade ```
 4. Added a 'grader' user, 'developers' group, and added 'grader' to the group:
 	* ``` sudo adduser grader ```
 	* ``` sudo groupadd developers ```
@@ -23,9 +23,8 @@
 5. Edited 'sudoers' list to include grader
 	* ``` sudo vim /etc/sudoers.d/grader ```
 		1. Inserted the following lines in the new file:
-			* ``` # User rules for Grader 
-				  grader ALL=(ALL) NOPASSWD:ALL
-			  ```
+			* ``` # User rules for Grader ```
+			* ``` grader ALL=(ALL) NOPASSWD:ALL ```
 6. Installed 'finger' and checked 'grader' info
 	* ``` sudo apt-get install finger ```
 	* ``` finger grader ```
@@ -84,41 +83,43 @@
 		* Created a 'catalog.wsgi' script in this new folder:
 			* ``` sudo touch var/www/udacity_catalog ```
 		* Edited 'catalog.wsgi' to have the following:
-			* ``` import sys
-			      import logging
-				  logging.basicConfig(stream=sys.stderr)
-				  sys.path.insert(0, '/opt/webapps/udacity-fullstack-catalog-postgres')
+			* ``` 
+			  import sys
+			  import logging
+			  logging.basicConfig(stream=sys.stderr)
+			  sys.path.insert(0, '/opt/webapps/udacity-fullstack-catalog-postgres')
 
-				  from catalog import app as application
-				  application.secret_key = 'secret'
+			  from catalog import app as application
+			  application.secret_key = 'secret'
 			  ```
 	* Created a 'udacity_catalog.conf' file in Apache2 'sited-available' folder:
 		* ``` sudo vim /etc/apache2/sites-available/udacity_catalog.conf ```
 	* Edited 'udacity_catalog.conf' appropriately:
-		* ``` <VirtualHost *>
-					ServerName udacity.catalog.local
-					ServerAdmin webmaster@localhost
+		* ``` 
+			<VirtualHost *>
+				ServerName udacity.catalog.local
+				ServerAdmin webmaster@localhost
 
-					DocumentRoot /opt/webapps/udacity-fullstack-catalog-postgres
+				DocumentRoot /opt/webapps/udacity-fullstack-catalog-postgres
 
-					ErrorLog ${APACHE_LOG_DIR}/error.log
-					CustomLog $(APACHE_LOG_DIR}/access.log combined
-					# LogLevel info
+				ErrorLog ${APACHE_LOG_DIR}/error.log
+				CustomLog $(APACHE_LOG_DIR}/access.log combined
+				# LogLevel info
 
-					# WSGI specific
-					WSGIScriptAlias / /var/www/udacity_catalog/catalog.wsgi
+				# WSGI specific
+				WSGIScriptAlias / /var/www/udacity_catalog/catalog.wsgi
 
-					<Directory /opt/webapps/udacity-fullstack-catalog-postgres>
-						Order allow,deny
-						Allow from all
-					</Directory>
+				<Directory /opt/webapps/udacity-fullstack-catalog-postgres>
+					Order allow,deny
+					Allow from all
+				</Directory>
 
-					<Directory /var/www/udacity_catalog>
-						Order allow,deny
-						Allow from all
-					</Directory>
-				</VirtualHost>
-			```
+				<Directory /var/www/udacity_catalog>
+					Order allow,deny
+					Allow from all
+				</Directory>
+			</VirtualHost>
+		  ```
 	* Edited '/etc/hosts' to allow for our app to run
 		* ``` sudo vim /etc/hosts ```
 			* Added 2 lines specific for our app URI handling
@@ -129,14 +130,15 @@
 	* Restarted apache2 so changes could take effect
 		* ``` sudo systemctl restart apache2 ```
 	* Installed Extra Needed libraries and applications:
-		* ``` sudo apt-get install python-pip
-			  sudo apt-get install python-flask
-			  sudo apt-get install python-flask-sqlalchemy
-			  sudo apt-get install python-psycopg2
-			  sudo apt-get install python-httplib2
-			  sudo apt-get install python-requests
-			  sudo apt-get install python-simplejson
-			  sudo -H pip install oauth2client
+		* ``` 
+		  sudo apt-get install python-pip
+		  sudo apt-get install python-flask
+		  sudo apt-get install python-flask-sqlalchemy
+		  sudo apt-get install python-psycopg2
+		  sudo apt-get install python-httplib2
+		  sudo apt-get install python-requests
+		  sudo apt-get install python-simplejson
+		  sudo -H pip install oauth2client
 		  ```
 	* Went to Google Developer Console and Edited Client_Secrets to include new IP address
 	* Replaced 'clien_secrets.json' contents with new Auth info from Google
@@ -158,8 +160,9 @@
 	* After reboot, check that Hosted Catalog App runs as expected:
 		* http://54.211.234.105/
 #### Referenced third-party resources:
-	* http://docs.sqlalchemy.org/en/latest/dialects/postgresql.html
-	* http://flask.pocoo.org/docs/0.12/deploying/mod_wsgi/
-	* Numeours StackOverflow questions/answers relating to issues with Flask, Mod_Wsgi, Apache2
+* http://docs.sqlalchemy.org/en/latest/dialects/postgresql.html
+* http://flask.pocoo.org/docs/0.12/deploying/mod_wsgi/
+* Google OAuth documentation
+* Numeours StackOverflow questions/answers relating to issues with Flask, Mod_Wsgi, Apache2
 #### License:
 Licensed for use unde the MIT License
